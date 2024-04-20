@@ -1,0 +1,21 @@
+# Compiled binary executables
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Dependency directories
+vendor/
+
+# IDE/Editor specific files
+.vscode/
+
+# Compiled Object files, Static and Dynamic libraries (Shared Objects)
+*.o
+*.a
+*.so
+
+# Log files and crash dumps
+*.log
+*.log.*

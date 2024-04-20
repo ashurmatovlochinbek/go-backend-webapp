@@ -1,0 +1,32 @@
+{
+	"Path": "simple-go-app",
+	"Main": true,
+	"Dir": "/Users/ashurmatovlochinbek/Desktop/go-simple-web-app",
+	"GoMod": "/Users/ashurmatovlochinbek/Desktop/go-simple-web-app/go.mod",
+	"GoVersion": "1.20"
+}
+{
+	"Path": "github.com/gorilla/mux",
+	"Version": "v1.8.1",
+	"Time": "2023-10-18T11:23:00Z",
+	"Dir": "/Users/ashurmatovlochinbek/go/pkg/mod/github.com/gorilla/mux@v1.8.1",
+	"GoMod": "/Users/ashurmatovlochinbek/go/pkg/mod/cache/download/github.com/gorilla/mux/@v/v1.8.1.mod",
+	"GoVersion": "1.20"
+}
+{
+	"Path": "github.com/joho/godotenv",
+	"Version": "v1.5.1",
+	"Time": "2023-02-05T21:47:38Z",
+	"Indirect": true,
+	"Dir": "/Users/ashurmatovlochinbek/go/pkg/mod/github.com/joho/godotenv@v1.5.1",
+	"GoMod": "/Users/ashurmatovlochinbek/go/pkg/mod/cache/download/github.com/joho/godotenv/@v/v1.5.1.mod",
+	"GoVersion": "1.12"
+}
+{
+	"Path": "github.com/lib/pq",
+	"Version": "v1.10.9",
+	"Time": "2023-04-26T04:34:24Z",
+	"Dir": "/Users/ashurmatovlochinbek/go/pkg/mod/github.com/lib/pq@v1.10.9",
+	"GoMod": "/Users/ashurmatovlochinbek/go/pkg/mod/cache/download/github.com/lib/pq/@v/v1.10.9.mod",
+	"GoVersion": "1.13"
+}
