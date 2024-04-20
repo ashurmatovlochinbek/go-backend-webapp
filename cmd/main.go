@@ -3,8 +3,15 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"simple-go-app/config"
+	"simple-go-app/internal/handler"
+	"simple-go-app/internal/repository"
+	"simple-go-app/internal/router"
+	"simple-go-app/internal/service"
 	"simple-go-app/pkg/db/postgres"
+
+	"github.com/gorilla/mux"
 )
 
 // _ "github.com/lib/pq"
@@ -52,26 +59,37 @@ func main() {
 		return
 	}
 
+	defer db.Close()
+
 	fmt.Println(db.Stats().InUse)
 
-	// err := connectToPostgres()
-	// if err != nil {
-	// 	return
-	// }
-	// defer db.Close()
-	// r := mux.NewRouter()
-	// r.HandleFunc("/", HomePageFunction).Methods("GET")
-	// r.HandleFunc("/items", GetAllItems).Methods("GET")
-	// r.HandleFunc("/items/{id}", GetItem).Methods("GET")
-	// r.HandleFunc("/items", CreateItem).Methods("POST")
-	// r.HandleFunc("/items/{id}", UpdateItem).Methods("PUT")
-	// r.HandleFunc("/items/{id}", DeleteItem).Methods("DELETE")
+	repo := repository.StudentRepo{DB: db}
+	service := service.StudentServ{SR: &repo}
+	handler := handler.StudentHandler{StudentService: &service}
 
-	// log.Fatal(http.ListenAndServe(":8080", r))
-	// r := route.NewRouter()
-	// log.Fatal(http.ListenAndServe(":8080", r))
+	r := mux.NewRouter()
+	router.InitRouter(r, &handler)
+
+	log.Fatal(http.ListenAndServe(":8080", r))
 
 }
+
+// err := connectToPostgres()
+// if err != nil {
+// 	return
+// }
+// defer db.Close()
+// r := mux.NewRouter()
+// r.HandleFunc("/", HomePageFunction).Methods("GET")
+// r.HandleFunc("/items", GetAllItems).Methods("GET")
+// r.HandleFunc("/items/{id}", GetItem).Methods("GET")
+// r.HandleFunc("/items", CreateItem).Methods("POST")
+// r.HandleFunc("/items/{id}", UpdateItem).Methods("PUT")
+// r.HandleFunc("/items/{id}", DeleteItem).Methods("DELETE")
+
+// log.Fatal(http.ListenAndServe(":8080", r))
+// r := route.NewRouter()
+// log.Fatal(http.ListenAndServe(":8080", r))
 
 // func HomePageFunction(w http.ResponseWriter, r *http.Request) {
 // 	fmt.Fprintf(w, "Home page")
