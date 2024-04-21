@@ -3,6 +3,7 @@ package postgres
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"simple-go-app/config"
 	"time"
 
@@ -29,6 +30,7 @@ func NewPsqlDB(c *config.PostgresConfig) (*sql.DB, error) {
 	db, err := sql.Open(c.PgDriver, dataSourceName)
 
 	if err != nil {
+		log.Println("Could not connect to database: db_conn.go:33")
 		return nil, err
 	}
 
@@ -38,8 +40,10 @@ func NewPsqlDB(c *config.PostgresConfig) (*sql.DB, error) {
 	db.SetConnMaxIdleTime(connMaxIdleTime * time.Second)
 
 	if err = db.Ping(); err != nil {
+		log.Println("Could not ping to database: db_conn.go:43")
 		return nil, err
 	}
 
+	log.Println("Succesfully connected to database: db_conn.go:47")
 	return db, nil
 }

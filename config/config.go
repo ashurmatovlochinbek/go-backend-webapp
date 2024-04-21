@@ -1,6 +1,7 @@
 package config
 
 import (
+	"log"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -17,9 +18,11 @@ type PostgresConfig struct {
 }
 
 func GetPostgresConfig() (*PostgresConfig, error) {
+	log.Println("Loading PostgresConfig")
 	err := godotenv.Load()
 
 	if err != nil {
+		log.Println("Error occured with loading PostgresConfig")
 		return nil, err
 	}
 
@@ -34,5 +37,3 @@ func GetPostgresConfig() (*PostgresConfig, error) {
 	}, nil
 
 }
-
-//psqlInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)

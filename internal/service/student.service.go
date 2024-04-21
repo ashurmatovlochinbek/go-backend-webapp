@@ -9,6 +9,8 @@ import (
 type StudentService interface {
 	GetAll(ctx context.Context) (*[]model.Student, error)
 	GetById(ctx context.Context, id int) (*model.Student, error)
+	Create(ctx context.Context, student *model.Student) (int, error)
+	Update(ctx context.Context, student *model.Student, id int) (*model.Student, error)
 }
 
 type StudentServ struct {
@@ -33,4 +35,24 @@ func (s *StudentServ) GetById(ctx context.Context, id int) (*model.Student, erro
 	}
 
 	return student, nil
+}
+
+func (s *StudentServ) Create(ctx context.Context, student *model.Student) (int, error) {
+	id, err := s.SR.Create(ctx, student)
+
+	if err != nil {
+		return 0, err
+	}
+
+	return id, nil
+}
+
+func (s *StudentServ) Update(ctx context.Context, student *model.Student, id int) (*model.Student, error) {
+	updatedStudent, err := s.SR.Update(ctx, student, id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return updatedStudent, nil
 }

@@ -3,6 +3,7 @@ package handler
 import (
 	"encoding/json"
 	"net/http"
+	"simple-go-app/internal/model"
 	"simple-go-app/internal/service"
 	"strconv"
 
@@ -50,6 +51,63 @@ func (h *StudentHandler) GetById(w http.ResponseWriter, r *http.Request) {
 	}
 
 	jsonFormat, err := json.Marshal(student)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonFormat)
+}
+
+func (h *StudentHandler) Create(w http.ResponseWriter, r *http.Request) {
+	var student model.Student
+	err := json.NewDecoder(r.Body).Decode(&student)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	id, err := h.StudentService.Create(r.Context(), &student)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(strconv.Itoa(id)))
+}
+
+func (h *StudentHandler) Update(w http.ResponseWriter, r *http.Request) {
+	idString := mux.Vars(r)["id"]
+
+	id, err := strconv.Atoi(idString)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	var student model.Student
+	err = json.NewDecoder(r.Body).Decode(&student)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	updatedStudent, err := h.StudentService.Update(r.Context(), &student, id)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	jsonFormat, err := json.Marshal(updatedStudent)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

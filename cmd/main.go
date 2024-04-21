@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"simple-go-app/config"
@@ -44,7 +43,7 @@ import (
 // }
 
 func main() {
-
+	log.Println("Starting api server: ")
 	config, err := config.GetPostgresConfig()
 
 	if err != nil {
@@ -60,8 +59,6 @@ func main() {
 	}
 
 	defer db.Close()
-
-	fmt.Println(db.Stats().InUse)
 
 	repo := repository.StudentRepo{DB: db}
 	service := service.StudentServ{SR: &repo}
