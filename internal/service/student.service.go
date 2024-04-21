@@ -8,6 +8,7 @@ import (
 
 type StudentService interface {
 	GetAll(ctx context.Context) (*[]model.Student, error)
+	GetById(ctx context.Context, id int) (*model.Student, error)
 }
 
 type StudentServ struct {
@@ -22,4 +23,14 @@ func (s *StudentServ) GetAll(ctx context.Context) (*[]model.Student, error) {
 	}
 
 	return students, nil
+}
+
+func (s *StudentServ) GetById(ctx context.Context, id int) (*model.Student, error) {
+	student, err := s.SR.GetById(ctx, id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return student, nil
 }

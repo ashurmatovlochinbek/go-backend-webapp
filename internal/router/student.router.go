@@ -8,4 +8,5 @@ import (
 
 func InitRouter(r *mux.Router, sh *handler.StudentHandler) {
 	r.HandleFunc("/students", sh.GetAllStudents).Methods("GET")
+	r.HandleFunc("/student/{id}", sh.GetById).Methods("GET")
 }
