@@ -11,6 +11,7 @@ type StudentService interface {
 	GetById(ctx context.Context, id int) (*model.Student, error)
 	Create(ctx context.Context, student *model.Student) (int, error)
 	Update(ctx context.Context, student *model.Student, id int) (*model.Student, error)
+	Delete(ctx context.Context, id int) (int, error)
 }
 
 type StudentServ struct {
@@ -55,4 +56,14 @@ func (s *StudentServ) Update(ctx context.Context, student *model.Student, id int
 	}
 
 	return updatedStudent, nil
+}
+
+func (s *StudentServ) Delete(ctx context.Context, id int) (int, error) {
+	affectedRows, err := s.SR.Delete(ctx, id)
+
+	if err != nil {
+		return 0, err
+	}
+
+	return affectedRows, nil
 }

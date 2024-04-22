@@ -12,7 +12,7 @@ type StudentRepository interface {
 	GetById(ctx context.Context, id int) (*model.Student, error)
 	Create(ctx context.Context, student *model.Student) (int, error)
 	Update(ctx context.Context, student *model.Student, id int) (*model.Student, error)
-	// Delete(ctx context.Context, id int) (int, error)
+	Delete(ctx context.Context, id int) (int, error)
 }
 
 type StudentRepo struct {
@@ -103,4 +103,20 @@ func (s *StudentRepo) Update(ctx context.Context, student *model.Student, id int
 	}
 
 	return &oldStudent, nil
+}
+
+func (s *StudentRepo) Delete(ctx context.Context, id int) (int, error) {
+	result, err := s.DB.ExecContext(ctx, "delete from student where id=$1", id)
+
+	if err != nil {
+		return 0, err
+	}
+
+	affectedRows, err := result.RowsAffected()
+
+	if err != nil {
+		return 0, err
+	}
+
+	return int(affectedRows), nil
 }
